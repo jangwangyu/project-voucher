@@ -1,0 +1,9 @@
+services:
+  project-voucher-mysql:
+    container_name: project-voucher-mysql
+    image: mysql:8.0.40
+    environment:
+      MYSQL_DATABASE: project-voucher-mysql
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "13306:3306"
