@@ -16,7 +16,7 @@ public class OpenApiConfig {
         .info(new Info()
             .title("Project Voucher")
             .description("Practice Boucher API")
-            .version(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).toString())
+            .version(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
         );
   }
 
