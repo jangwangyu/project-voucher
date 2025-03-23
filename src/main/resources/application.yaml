@@ -7,8 +7,13 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
         format_sql: true
+    show-sql: true
   datasource:
     url: jdbc:mysql://localhost:13306/project-voucher-mysql
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+logging:
+  level:
+    org.hibernate.orm.jdbc.bind: TRACE
