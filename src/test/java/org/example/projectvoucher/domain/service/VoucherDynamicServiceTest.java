@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
+import org.example.projectvoucher.common.type.VoucherAmountType;
 import org.example.projectvoucher.common.type.VoucherStatusType;
 import org.example.projectvoucher.storage.voucher.VoucherEntity;
 import org.example.projectvoucher.storage.voucher.VoucherRepository;
@@ -34,7 +35,7 @@ class VoucherDynamicServiceTest {
           // Given
           final LocalDate validFrom = LocalDate.now();
           final LocalDate validTo = LocalDate.now().plusDays(30);
-          final Long amount = 10000L;
+          final VoucherAmountType amount = VoucherAmountType.KRW_30000;
 
           // When
           final String code = voucherService.publish(validFrom, validTo, amount);
@@ -68,7 +69,7 @@ class VoucherDynamicServiceTest {
           // Given
           final LocalDate validFrom = LocalDate.now();
           final LocalDate validTo = LocalDate.now().plusDays(30);
-          final Long amount = 10000L;
+          final VoucherAmountType amount = VoucherAmountType.KRW_30000;
 
           final String code = voucherService.publish(validFrom, validTo, amount);
           codes.add(code);

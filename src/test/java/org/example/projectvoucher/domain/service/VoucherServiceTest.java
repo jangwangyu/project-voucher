@@ -3,6 +3,7 @@ package org.example.projectvoucher.domain.service;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
+import org.example.projectvoucher.common.type.VoucherAmountType;
 import org.example.projectvoucher.common.type.VoucherStatusType;
 import org.example.projectvoucher.storage.voucher.VoucherEntity;
 import org.example.projectvoucher.storage.voucher.VoucherRepository;
@@ -25,7 +26,7 @@ class VoucherServiceTest {
     // Given
     final LocalDate validFrom = LocalDate.now();
     final LocalDate validTo = LocalDate.now().plusDays(30);
-    final Long amount = 10000L;
+    final VoucherAmountType amount = VoucherAmountType.KRW_30000;
 
     final String code = voucherService.publish(validFrom, validTo, amount);
     // When
@@ -45,7 +46,7 @@ class VoucherServiceTest {
     // Given
     final LocalDate validFrom = LocalDate.now();
     final LocalDate validTo = LocalDate.now().plusDays(30);
-    final Long amount = 10000L;
+    final VoucherAmountType amount = VoucherAmountType.KRW_30000;
 
     final String code = voucherService.publish(validFrom, validTo, amount);
     // When
@@ -69,7 +70,7 @@ class VoucherServiceTest {
     // Given
     final LocalDate validFrom = LocalDate.now();
     final LocalDate validTo = LocalDate.now().plusDays(30);
-    final Long amount = 10000L;
+    final VoucherAmountType amount = VoucherAmountType.KRW_30000;
 
     final String code = voucherService.publish(validFrom, validTo, amount);
     // When
