@@ -19,10 +19,10 @@ public class VoucherService {
 
   // 상품권 발행
   @Transactional
-  public String publish(final LocalDate validFrom, final LocalDate validTo, final VoucherAmountType amountType) {
+  public String publish(final LocalDate validFrom, final LocalDate validTo, final VoucherAmountType amount) {
     final String code = UUID.randomUUID().toString().toUpperCase().replaceAll("-", "");
 
-    VoucherEntity voucherEntity = new VoucherEntity(code, VoucherStatusType.PUBLISH,validFrom, validTo, amountType);
+    VoucherEntity voucherEntity = new VoucherEntity(code, VoucherStatusType.PUBLISH,validFrom, validTo, amount);
 
     return voucherRepository.save(voucherEntity).code();
   }
