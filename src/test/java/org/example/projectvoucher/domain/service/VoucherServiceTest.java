@@ -3,12 +3,10 @@ package org.example.projectvoucher.domain.service;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
-import java.util.UUID;
-import org.example.projectvoucher.common.dto.RequestContext;
-import org.example.projectvoucher.common.type.RequesterType;
 import org.example.projectvoucher.common.type.VoucherAmountType;
 import org.example.projectvoucher.common.type.VoucherStatusType;
 import org.example.projectvoucher.storage.voucher.VoucherEntity;
+import org.example.projectvoucher.storage.voucher.VoucherHistoryEntity;
 import org.example.projectvoucher.storage.voucher.VoucherRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class VoucherServiceTest {
+
   @Autowired
   private VoucherService voucherService;
 
@@ -30,9 +29,8 @@ class VoucherServiceTest {
     final LocalDate validFrom = LocalDate.now();
     final LocalDate validTo = LocalDate.now().plusDays(30);
     final VoucherAmountType amount = VoucherAmountType.KRW_30000;
-    final RequestContext requestContext = new RequestContext(RequesterType.USER, UUID.randomUUID().toString());
 
-    final String code = voucherService.publishV2(requestContext , validFrom, validTo, amount);
+    final String code = voucherService.publish(validFrom, validTo, amount);
     // When
     final VoucherEntity voucherEntity = voucherRepository.findByCode(code).get();
 
@@ -51,13 +49,14 @@ class VoucherServiceTest {
     final LocalDate validFrom = LocalDate.now();
     final LocalDate validTo = LocalDate.now().plusDays(30);
     final VoucherAmountType amount = VoucherAmountType.KRW_30000;
-    final RequestContext requestContext = new RequestContext(RequesterType.USER,"user-test");
 
-    final String code = voucherService.publishV2(requestContext,validFrom, validTo, amount);
+    final String code = voucherService.publish(validFrom, validTo, amount);
+
     // When
-    voucherService.disableV2(requestContext,code);
-    final VoucherEntity voucherEntity = voucherRepository.findByCode(code).get();
+    voucherService.disable(code);
+
     // Then
+    final VoucherEntity voucherEntity = voucherRepository.findByCode(code).get();
     assertThat(voucherEntity.code()).isEqualTo(code);
     assertThat(voucherEntity.status()).isEqualTo(VoucherStatusType.DISABLE);
     assertThat(voucherEntity.validFrom()).isEqualTo(validFrom);
@@ -67,6 +66,7 @@ class VoucherServiceTest {
 
     System.out.println(voucherEntity.createAt());
     System.out.println("업데이트: " + voucherEntity.updateAt());
+
   }
 
   @DisplayName("발행된 상품권은 사용할 수 있다.")
@@ -76,11 +76,10 @@ class VoucherServiceTest {
     final LocalDate validFrom = LocalDate.now();
     final LocalDate validTo = LocalDate.now().plusDays(30);
     final VoucherAmountType amount = VoucherAmountType.KRW_30000;
-    final RequestContext requestContext = new RequestContext(RequesterType.USER,"user-test");
 
-    final String code = voucherService.publishV2(requestContext,validFrom, validTo, amount);
+    final String code = voucherService.publish(validFrom, validTo, amount);
     // When
-    voucherService.useV2(requestContext, code);
+    voucherService.use(code);
     final VoucherEntity voucherEntity = voucherRepository.findByCode(code).get();
 
     // Then
