@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import org.example.projectvoucher.app.controller.voucher.request.VoucherDisableV2Reqeust;
 import org.example.projectvoucher.app.controller.voucher.request.VoucherPublishReqeust;
 import org.example.projectvoucher.app.controller.voucher.request.VoucherPublishV2Reqeust;
-import org.example.projectvoucher.app.controller.voucher.request.VoucherUseReqeust;
 import org.example.projectvoucher.app.controller.voucher.request.VoucherUseV2Reqeust;
 import org.example.projectvoucher.app.controller.voucher.response.VoucherDisableV2Response;
 import org.example.projectvoucher.app.controller.voucher.response.VoucherPublishResponse;

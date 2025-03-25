@@ -3,7 +3,6 @@ package org.example.projectvoucher.domain.service;
 import java.time.LocalDate;
 import java.util.UUID;
 import org.example.projectvoucher.common.dto.RequestContext;
-import org.example.projectvoucher.common.type.RequesterType;
 import org.example.projectvoucher.common.type.VoucherAmountType;
 import org.example.projectvoucher.common.type.VoucherStatusType;
 import org.example.projectvoucher.storage.voucher.VoucherEntity;
@@ -19,7 +18,7 @@ public class VoucherService {
     this.voucherRepository = voucherRepository;
   }
 
-  // 상품권 발행
+  // 상품권 발행v1
   @Transactional
   public String publish(final LocalDate validFrom, final LocalDate validTo, final VoucherAmountType amount) {
     final String code = UUID.randomUUID().toString().toUpperCase().replaceAll("-", "");
@@ -29,7 +28,7 @@ public class VoucherService {
     return voucherRepository.save(voucherEntity).code();
   }
 
-  // 상품권 사용 불가 처리
+  // 상품권 사용 불가 처리v1
   @Transactional
   public void disable(String code) {
     final VoucherEntity voucherEntity = voucherRepository.findByCode(code)
@@ -38,7 +37,7 @@ public class VoucherService {
     voucherEntity.disable();
   }
 
-  // 상품권 사용
+  // 상품권 사용v1
   @Transactional
   public void use(String code) {
     final VoucherEntity voucherEntity = voucherRepository.findByCode(code)
