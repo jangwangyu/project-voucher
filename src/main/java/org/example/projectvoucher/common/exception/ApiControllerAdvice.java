@@ -18,20 +18,25 @@ public class ApiControllerAdvice {
   @ExceptionHandler(IllegalArgumentException.class)
   public ErrorResponse handleIllegralArgumentException(final IllegalArgumentException e) {
     log.info(Arrays.toString(e.getStackTrace()));
-    return new ErrorResponse(e.getMessage(), LocalDateTime.now(),UUID.randomUUID());
+    return createErrorResponse(e.getMessage());
   }
+
 
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   @ExceptionHandler(IllegalStateException.class)
   public ErrorResponse handleIllegralStateException(final IllegalStateException e) {
     log.info(Arrays.toString(e.getStackTrace()));
-    return new ErrorResponse(e.getMessage(), LocalDateTime.now(),UUID.randomUUID());
+    return createErrorResponse(e.getMessage());
   }
 
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   @ExceptionHandler(Exception.class)
   public ErrorResponse handleException(final Exception e) {
     log.error(Arrays.toString(e.getStackTrace()));
-    return new ErrorResponse(e.getMessage(), LocalDateTime.now(),UUID.randomUUID());
+    return createErrorResponse(e.getMessage());
+  }
+
+  private static ErrorResponse createErrorResponse(final String e) {
+    return new ErrorResponse(e, LocalDateTime.now(), UUID.randomUUID());
   }
 }
