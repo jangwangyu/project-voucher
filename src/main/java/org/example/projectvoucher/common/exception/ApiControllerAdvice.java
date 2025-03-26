@@ -1,6 +1,8 @@
 package org.example.projectvoucher.common.exception;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -16,21 +18,20 @@ public class ApiControllerAdvice {
   @ExceptionHandler(IllegalArgumentException.class)
   public ErrorResponse handleIllegralArgumentException(final IllegalArgumentException e) {
     log.info(Arrays.toString(e.getStackTrace()));
-//    return e.getMessage();
-    return new ErrorResponse(e.getMessage());
+    return new ErrorResponse(e.getMessage(), LocalDateTime.now(),UUID.randomUUID());
   }
 
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   @ExceptionHandler(IllegalStateException.class)
   public ErrorResponse handleIllegralStateException(final IllegalStateException e) {
     log.info(Arrays.toString(e.getStackTrace()));
-    return new ErrorResponse(e.getMessage());
+    return new ErrorResponse(e.getMessage(), LocalDateTime.now(),UUID.randomUUID());
   }
 
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   @ExceptionHandler(Exception.class)
   public ErrorResponse handleException(final Exception e) {
     log.error(Arrays.toString(e.getStackTrace()));
-    return new ErrorResponse(e.getMessage());
+    return new ErrorResponse(e.getMessage(), LocalDateTime.now(),UUID.randomUUID());
   }
 }
