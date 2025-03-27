@@ -6,6 +6,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
@@ -15,7 +16,7 @@ import org.example.projectvoucher.common.type.VoucherAmountType;
 import org.example.projectvoucher.common.type.VoucherStatusType;
 import org.example.projectvoucher.storage.BaseEntity;
 
-@Table(name = "voucher_history")
+@Table(name = "voucher")
 @Entity
 public class VoucherEntity extends BaseEntity {
   private String code;
@@ -31,15 +32,20 @@ public class VoucherEntity extends BaseEntity {
   @JoinColumn(name = "voucher_id")
   private List<VoucherHistoryEntity> histories = new ArrayList<>();
 
+  @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+  @JoinColumn(name = "contract_id")
+  private ContractEntity contract;
+
   public VoucherEntity() {}
 
-  public VoucherEntity(String code, VoucherStatusType status, LocalDate validFrom, LocalDate validTo, VoucherAmountType amount,VoucherHistoryEntity voucherHistory) {
+  public VoucherEntity(String code, VoucherStatusType status, VoucherAmountType amount, VoucherHistoryEntity voucherHistory, ContractEntity contractEntity) {
     this.code = code;
     this.status = status;
-    this.validFrom = validFrom;
-    this.validTo = validTo;
+    this.validFrom = LocalDate.now();
+    this.validTo = LocalDate.now().plusDays(contractEntity.voucherValidPeriodDayCount());
     this.amount = amount;
     this.histories.add(voucherHistory);
+    this.contract = contractEntity;
   }
 
   public String code() {
@@ -60,6 +66,13 @@ public class VoucherEntity extends BaseEntity {
 
   public List<VoucherHistoryEntity> histories() {
     return histories;
+  }
+
+  public VoucherHistoryEntity publishHistory() {
+    return histories.stream()
+        .filter(voucherHistoryEntity -> voucherHistoryEntity.status().equals(VoucherStatusType.PUBLISH))
+        .findFirst()
+        .orElseThrow(() -> new IllegalStateException("발행 이력이 존재하지 않습니다."));
   }
 
   public void disable(final VoucherHistoryEntity voucherHistoryEntity) {

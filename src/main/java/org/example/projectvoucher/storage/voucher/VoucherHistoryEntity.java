@@ -8,7 +8,7 @@ import org.example.projectvoucher.common.type.RequesterType;
 import org.example.projectvoucher.common.type.VoucherStatusType;
 import org.example.projectvoucher.storage.BaseEntity;
 
-@Table(name = "voucher")
+@Table(name = "voucher_history")
 @Entity
 public class VoucherHistoryEntity extends BaseEntity {
   private String orderid;
