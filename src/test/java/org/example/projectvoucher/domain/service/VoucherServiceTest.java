@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import org.example.projectvoucher.common.type.VoucherAmountType;
 import org.example.projectvoucher.common.type.VoucherStatusType;
 import org.example.projectvoucher.storage.voucher.VoucherEntity;
-import org.example.projectvoucher.storage.voucher.VoucherHistoryEntity;
 import org.example.projectvoucher.storage.voucher.VoucherRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
