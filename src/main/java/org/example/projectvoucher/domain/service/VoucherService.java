@@ -106,7 +106,7 @@ public class VoucherService {
 
     final ContractEntity contractEntity = contractRepository.findByCode(contractCode).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 계약입니다."));
 
-    VoucherPublishValidator.validate(contractEntity);
+    voucherPublishValidator.validate(contractEntity);
 
     final VoucherHistoryEntity voucherHistoryEntity = new VoucherHistoryEntity(orderId, requestContext.requesterType(),requestContext.requesterId(),VoucherStatusType.PUBLISH,"발행");
     final VoucherEntity voucherEntity = new VoucherEntity(code, VoucherStatusType.PUBLISH, amount, voucherHistoryEntity, contractEntity);
